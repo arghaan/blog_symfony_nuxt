@@ -1,0 +1,89 @@
+version: '3.7'
+
+services:
+
+  traefik:
+    image: traefik:latest
+    container_name: proxy
+    command: --api --docker --docker.exposedbydefault=false
+    networks:
+      net:
+        ipv4_address: 172.16.111.10
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  node:
+    build:
+      context: ./services/node
+    image: arghaan/node
+    hostname: syrius.local
+    container_name: node
+    working_dir: /home/node/app
+    labels:
+      - traefik.enable=true
+      - traefik.port=8000
+      - traefik.backend=node
+      - traefik.frontend.rule=Host:syrius.local
+    networks:
+      net:
+        ipv4_address: 172.16.111.20
+#    command: "ping ya.ru"
+    command: "yarn serve"
+    extra_hosts:
+      - "api.syrius.local:10.1.1.7"
+    volumes:
+      - ./client:/home/node/app:rw
+
+  api:
+    image: thecodingmachine/php:7.3-v2-apache
+    container_name: php
+    networks:
+      net:
+        ipv4_address: 172.16.111.30
+    labels:
+      - traefik.enable=true
+      - traefik.frontend.rule=Host:api.syrius.local
+    environment:
+      APACHE_DOCUMENT_ROOT: public/
+      PHP_EXTENSION_XDEBUG: 1
+      PHP_EXTENSION_GD: 1
+      PHP_MEMORY_LIMIT: 1G
+      PHP_INI_MAX_EXECUTION_TIME: 120
+      # Symfony
+      APP_ENV: dev
+      APP_SECRET: fd4f75c792f98b3c603a576ebff41ee2
+      DATABASE_URL: mysql://root:admin@db:3306/blog_db # mysql://db_user:db_password@127.0.0.1:3306/db_name
+    volumes:
+      - ./api:/var/www/html:rw
+
+
+  mysql:
+    image: mysql:5.7
+    container_name: db
+    networks:
+      net:
+        ipv4_address: 172.16.111.40
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: blog_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: acd74h5
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./services/mysql/utf8mb4.cnf:/etc/mysql/conf.d/utf8mb4.cnf:ro
+
+volumes:
+  mysql_data:
+
+networks:
+  net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.111.0/24
