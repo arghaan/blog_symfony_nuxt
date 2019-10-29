@@ -1,11 +1,14 @@
-version: '3.7'
+version: '3.3'
 
 services:
 
   traefik:
     image: traefik:latest
     container_name: proxy
-    command: --api --docker --docker.exposedbydefault=false
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--providers.docker.exposedByDefault=false"
     networks:
       net:
         ipv4_address: 172.16.111.10
@@ -24,18 +27,18 @@ services:
     working_dir: /home/node/app
     labels:
       - traefik.enable=true
-      - traefik.port=8000
-      - traefik.backend=node
-      - traefik.frontend.rule=Host:syrius.local
+      - traefik.http.routers.node.rule=Host(`syrius.local`)
     networks:
       net:
         ipv4_address: 172.16.111.20
 #    command: "ping ya.ru"
-    command: "yarn serve"
+    command: "npm run dev"
+    ports:
+      - 8000:8000
     extra_hosts:
-      - "api.syrius.local:10.1.1.7"
+      - "api.syrius.local:172.16.111.10"
     volumes:
-      - ./client:/home/node/app:rw
+      - ./nuxt:/home/node/app:rw
 
   api:
     image: thecodingmachine/php:7.3-v2-apache
@@ -45,7 +48,7 @@ services:
         ipv4_address: 172.16.111.30
     labels:
       - traefik.enable=true
-      - traefik.frontend.rule=Host:api.syrius.local
+      - traefik.http.routers.api.rule=Host(`api.syrius.local`)
     environment:
       APACHE_DOCUMENT_ROOT: public/
       PHP_EXTENSION_XDEBUG: 1
