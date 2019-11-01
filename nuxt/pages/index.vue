@@ -1,75 +1,95 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a href="https://vuetifyjs.com" target="_blank"> documentation </a>.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a href="https://chat.vuetifyjs.com/" target="_blank" title="chat">
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a href="https://nuxtjs.org/" target="_blank">
-            Nuxt Documentation
-          </a>
-          <br />
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank">
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire">
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+    <section class="column-wrapper">
+        <v-container>
+            <v-row>
+                <v-col
+                    cols="12"
+                    md="9"
+                >
+                    <article-item
+                        :index=key
+                        :item=item
+                        :key=key
+                        class="mb-4"
+                        v-for="(item, key) in articles"
+                    />
+                </v-col>
+                <v-col>
+                    <category-list
+                        v-for="(item, key) in categories"
+                        :index="key"
+                        :item="item"
+                        :key="key"
+                    />
+                </v-col>
+            </v-row>
+        </v-container>
+    </section>
 </template>
 
-<script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+<style lang="scss" scoped>
+    .column-wrapper {
+        width: 1240px;
+        margin: auto;
+    }
+</style>
 
-export default {
-  components: {
-    Logo,
-    VuetifyLogo
-  }
-}
+<script>
+
+    import ArticleItem from "~/components/ArticleItem";
+    import CategoryList from "~/components/CategoryList";
+
+    export default {
+        components: {
+            ArticleItem,
+            CategoryList
+        },
+        data() {
+            // noinspection LongLine
+            return {
+                articles: [
+                    {
+                        title: 'Title ',
+                        text: `
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae risus ut metus gravida congue in ac nisl. Praesent leo urna, venenatis sit amet tortor vitae, commodo tincidunt libero. Maecenas porta pharetra sem, vel dapibus odio eleifend non. Suspendisse lobortis ipsum at diam congue condimentum. Mauris aliquam, dolor in gravida sagittis, metus metus tincidunt nisi, a blandit nisl leo consequat purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam et nunc condimentum, consequat mauris ut, accumsan sem.</p>
+
+                        <img alt="" src="https://hsto.org/webt/af/ns/d6/afnsd6pdnqhezs-ge1tjjl34xeo.jpeg" />
+
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <cut>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
+                        `,
+                        author: 'Unknown Author',
+                        date: 'вчера 11:45',
+                        tags: ['Управление персоналом', 'Карьера в IT-индустрии', 'Читальный зал'],
+                        categories: [
+                            {title: 'Soft', link: '/soft'},
+                            {title: 'PHP', link: '/php'},
+                            {title: 'Linux', link: '/linux'},
+                        ],
+                        comments: 123,
+                    },
+                ],
+                categories: [
+                    {title: 'Soft', link: '/soft'},
+                    {title: 'PHP', link: '/php'},
+                    {title: 'Linux', link: '/linux'},
+                ],
+            }
+        },
+    }
 </script>

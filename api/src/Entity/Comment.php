@@ -1,9 +1,13 @@
 <?php
+declare(strict_types=1);
+
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * @ApiResource()
@@ -21,29 +25,38 @@ class Comment
     /**
      * @ORM\Column(type="text")
      */
-    private $body;
+    private $text;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $author;
+
+    /**
+     * @ManyToOne(targetEntity="Article", inversedBy="comments")
+     * @JoinColumn(name="article_id", referencedColumnName="id")
      */
     private $article;
+
+    /**
+     * Comment constructor.
+     *
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
 
     public function getId(): ?string
     {
         return $this->id;
-    }
-
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(string $body): self
-    {
-        $this->body = $body;
-
-        return $this;
     }
 
     public function getArticle(): ?Article
@@ -58,11 +71,40 @@ class Comment
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString(): string
+    public function getText(): ?string
     {
-        return (string) $this->getId();
+        return $this->text;
     }
+
+    public function setText(string $text): self
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
 }
