@@ -1,0 +1,35 @@
+{
+    articles {
+        edges {
+            node {
+                id,
+                title,
+                text,
+                createdAt,
+                tags{
+                    totalCount,
+                    edges {
+                        node {
+                            id
+                        }
+                    }
+                },
+                author {
+                    id,
+                    username
+                },
+                comments {
+                    totalCount
+                },
+                categories {
+                    edges {
+                        node {
+                            id,
+                            title
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -12,10 +12,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(attributes={
- *     "normalization_context"={"groups"={"read"}},
- *     "denormalization_context"={"groups"={"write"}}
- * })
+ * @ApiResource(
+ *     attributes={
+ *          "normalization_context"={"groups"={"read"}},
+ *          "denormalization_context"={"groups"={"write"}},
+ *          "security"="is_granted('ROLE_USER')",
+ *     },
+ *      collectionOperations={
+ *         "get",
+ *         "post"={"security"="is_granted('ROLE_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *         "get",
+ *         "put"={"security"="is_granted('ROLE_ADMIN')"},
+ *     }
+ * )
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -30,18 +41,13 @@ class User implements UserInterface, Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=64, unique=true)
-     */
-    private $apiKey;
-
-    /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="string", length=64)
      * @Groups("read")
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=255)
      */
     private $password;
 
@@ -64,6 +70,17 @@ class User implements UserInterface, Serializable
     private $comments;
 
     /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $email;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $avatar;
+
+    /**
      * User constructor.
      *
      */
@@ -76,18 +93,6 @@ class User implements UserInterface, Serializable
     public function getId(): ?string
     {
         return $this->id;
-    }
-
-    public function getApiKey(): ?string
-    {
-        return $this->apiKey;
-    }
-
-    public function setApiKey(string $apiKey): self
-    {
-        $this->apiKey = $apiKey;
-
-        return $this;
     }
 
     public function getUsername(): ?string
@@ -151,8 +156,7 @@ class User implements UserInterface, Serializable
             [
                 $this->id,
                 $this->username,
-//                $this->password,
-                $this->apiKey,
+                //                $this->password,
                 // see section on salt below
                 // $this->salt,
             ]
@@ -168,7 +172,6 @@ class User implements UserInterface, Serializable
             $this->id,
             $this->username,
 //            $this->password,
-            $this->apiKey,
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized, ['allowed_classes' => false]);
@@ -234,5 +237,37 @@ class User implements UserInterface, Serializable
         }
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar): void
+    {
+        $this->avatar = $avatar;
     }
 }

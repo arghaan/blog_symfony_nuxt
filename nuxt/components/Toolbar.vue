@@ -7,7 +7,7 @@
         >
             <v-toolbar-title class="py-2 mr-12">
                 <v-img
-                        :src="require('../assets/images/logo.svg')"
+                        src='/logo.svg'
                         contain
                         width="200"
                 >

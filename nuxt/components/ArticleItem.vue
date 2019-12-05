@@ -12,36 +12,36 @@
                     class="author__avatar float-left mx-2"
                     src="https://randomuser.me/api/portraits/men/21.jpg"
                 />
-                <a class="author__name" href="#">{{item.author}}</a>
-                <span class="author__date">{{item.date}}</span>
+                <a class="author__name" href="#">{{item.node.author.username}}</a>
+                <span class="author__date">{{item.node.createdAt}}</span>
             </div>
             <v-card-title>
-                <div class="post__title_link">{{item.title + (index + 1)}}</div>
+                <div class="post__title_link">{{item.node.title}}</div>
             </v-card-title>
             <ul class="tags">
                 <li
                     class="tags__item"
-                    v-for="(tag, index) in item.tags"
+                    v-for="(tag, index) in item.node.tags.edges"
                 >
                     <a
                         class="tags__link"
-                        :href="'#' + tag"
+                        :href="'#' + tag.node.id"
                     >
-                        {{tag}}<span v-if="(index + 1) < item.tags.length">, </span>
+                        {{tag.node.id}}<span v-if="(index + 1) < item.node.tags.totalCount">, </span>
                     </a>
                 </li>
             </ul>
             <v-chip
-                v-for="(category, index) in item.categories"
+                v-for="(category, index) in item.node.categories.edges"
                 :key="index"
-                :href="category.link"
+                :href="category.node.link"
                 :link=true
                 :nuxt=true
                 class="mb-5 mx-1 main-color"
                 outlined
                 pill
             >
-                {{category.title}}
+                {{category.node.title}}
             </v-chip>
             <article-text
                 class="text"
@@ -55,7 +55,7 @@
             </v-btn>
             <v-btn text class="main-color">
                 <v-icon class="mr-1">mdi-comment</v-icon>
-                {{item.comments}}
+                {{item.node.comments.totalCount}}
             </v-btn>
         </v-card>
     </article>
@@ -80,13 +80,13 @@
             }
         },
         computed: {
-            articleShort() {
-                return _.truncate(this.item.text, {'length': 1000})
-            },
             cutText() {
-                const cutText = this.item.text.split("<cut>");
+                const cutText = this.item.node.text.split("<cut>");
                 this.cut = typeof cutText[1] != "undefined";
                 return cutText[0];
+            },
+            formattedDate(){
+                let date = new Date(this.item.node.text.createdAt)
             }
         }
     }

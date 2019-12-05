@@ -1,0 +1,5 @@
+{
+  user (id: "/api/users/ea7ea938-0cf4-11ea-af97-0242ac106f29") {
+    username
+  }
+}

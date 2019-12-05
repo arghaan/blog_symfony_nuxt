@@ -35,25 +35,40 @@ export default {
     /*
      ** Plugins to load before mounting the App
      */
-    plugins: [],
+    plugins: [
+        {src: '~/plugins/localStorage.js', ssr: true},
+        // {src: '~/plugins/apollo-error-handler.js', ssr: true}
+    ],
     /*
      ** Nuxt.js dev-modules
      */
     buildModules: [
         // Doc: https://github.com/nuxt-community/eslint-module
         // '@nuxtjs/eslint-module',
-        '@nuxtjs/vuetify'
+        '@nuxtjs/vuetify',
     ],
     /*
      ** Nuxt.js modules
      */
-    modules: [],
+    modules: [
+        '@nuxtjs/axios',
+        '@nuxtjs/apollo',
+        '@nuxtjs/auth',
+    ],
+
+    router: {
+        // middleware: ['auth']
+    },
     /*
      ** vuetify module configuration
      ** https://github.com/nuxt-community/vuetify-module
      */
     vuetify: {
-        customVariables: ['~/assets/variables.scss', '~/assets/placeholders.scss'],
+        customVariables: [
+            '~/assets/variables.scss',
+            '~/assets/placeholders.scss',
+            '~/assets/vars.scss'
+        ],
         // treeShake: true,
 
         defaultAssets: {
@@ -86,5 +101,30 @@ export default {
          */
         extend(config, ctx) {
         }
+    },
+    apollo: {
+        clientConfigs: {
+            default: '~/apollo/client-config.js',
+        }
+    },
+    axios: {
+        baseURL: 'http://api.syrius.local/api',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    },
+    auth: {
+        resetOnError: true,
+        scopeKey: 'roles',
+        strategies: {
+            local: {
+                endpoints: {
+                    login: {url: 'login_check', method: 'post', propertyName: 'token'},
+                    user: {url: 'user', method: 'get', propertyName: 'user'},
+                    logout: false
+                }
+            },
+        },
+        plugins: [],
     }
 }

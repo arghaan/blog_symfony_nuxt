@@ -9,15 +9,31 @@ use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
+
+
+    /**
+     * AppFixtures constructor.
+     */
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $user = new User();
-        $user->setApiKey('test_api_key');
         $user->setUsername('test');
-        $user->setPassword('test');
+        $user->setPassword($this->encoder->encodePassword($user, 'test'));
+        $user->setEmail('email@example.com');
+        $user->setAvatar('https://randomuser.me/api/portraits/men/21.jpg');
         $manager->persist($user);
 
         for ($i = 0; $i < 10; $i++) {

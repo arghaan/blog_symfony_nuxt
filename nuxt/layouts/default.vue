@@ -23,6 +23,7 @@
     export default {
         // name: 'App',
         components: {Toolbar},
+
         data() {
             return {}
         },
