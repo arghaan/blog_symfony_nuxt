@@ -34,7 +34,7 @@ class Comment
     private \DateTimeImmutable $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=true)
      */
     private User $author;
