@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -23,28 +24,28 @@ class Article
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid", unique=true)
      */
-    private $id;
+    private string $id;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $title;
+    private string $title;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $text;
+    private string $text;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $author;
+    private User $author;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     /**
      * @ManyToMany(targetEntity="Tag")
@@ -53,18 +54,18 @@ class Article
      *      inverseJoinColumns={@JoinColumn(name="tag_id", referencedColumnName="id")}
      *      )
      */
-    private $tags;
+    private Collection $tags;
 
     /**
      * @ManyToMany(targetEntity="Category", inversedBy="articles")
      * @JoinTable(name="articles_categories")
      */
-    private $categories;
+    private Collection $categories;
 
     /**
      * @OneToMany(targetEntity="Comment", mappedBy="article")
      */
-    private $comments;
+    private Collection $comments;
 
     /**
      * Article constructor.
@@ -73,9 +74,9 @@ class Article
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->tags = new ArrayCollection();
-        $this->comments = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
+        $this->tags       = new ArrayCollection();
+        $this->comments   = new ArrayCollection();
+        $this->createdAt  = new \DateTimeImmutable();
     }
 
     public function getId(): ?string
@@ -141,7 +142,7 @@ class Article
 
     public function addTag(Tag $tag): self
     {
-        if (!$this->tags->contains($tag)) {
+        if ( ! $this->tags->contains($tag)) {
             $this->tags[] = $tag;
         }
 
@@ -167,7 +168,7 @@ class Article
 
     public function addCategory(Category $category): self
     {
-        if (!$this->categories->contains($category)) {
+        if ( ! $this->categories->contains($category)) {
             $this->categories[] = $category;
         }
 
@@ -193,7 +194,7 @@ class Article
 
     public function addComment(Comment $comment): self
     {
-        if (!$this->comments->contains($comment)) {
+        if ( ! $this->comments->contains($comment)) {
             $this->comments[] = $comment;
         }
 

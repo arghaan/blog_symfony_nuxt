@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 
@@ -7,8 +8,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * @ApiResource()
@@ -21,24 +22,24 @@ class Category
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid", unique=true)
      */
-    private $id;
+    private string $id;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $title;
+    private string $title;
 
     /**
      * @ManyToMany(targetEntity="Article", mappedBy="categories")
      */
-    private $articles;
+    private Collection $articles;
 
     /**
      * Category constructor.
      */
     public function __construct()
     {
-        $this->articles = new ArrayCollection();;
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -56,7 +57,7 @@ class Category
 
     public function addArticle(Article $article): self
     {
-        if (!$this->articles->contains($article)) {
+        if ( ! $this->articles->contains($article)) {
             $this->articles[] = $article;
             $article->addCategory($this);
         }

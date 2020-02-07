@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -38,47 +39,46 @@ class User implements UserInterface, Serializable
      * @ORM\GeneratedValue(strategy="UUID")
      * @Groups("read")
      */
-    private $id;
+    private string $id;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups("read")
      */
-    private $username;
+    private string $username;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private string $password;
 
     /**
-     * @var string[]
      * @ORM\Column(type="simple_array")
      */
-    private $roles = ['ROLE_USER'];
+    private array $roles = ['ROLE_USER'];
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="author")
      * @Groups("read")
      */
-    private $articles;
+    private Collection $articles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author")
      * @Groups("read")
      */
-    private $comments;
+    private Collection $comments;
 
     /**
      * @ORM\Column(type="string", length=64)
      */
-    private $email;
+    private string $email;
 
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $avatar;
+    private string $avatar;
 
     /**
      * User constructor.
@@ -86,8 +86,8 @@ class User implements UserInterface, Serializable
      */
     public function __construct()
     {
-        $this->articles = new ArrayCollection();;
-        $this->comments = new ArrayCollection();;
+        $this->articles = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -187,7 +187,7 @@ class User implements UserInterface, Serializable
 
     public function addArticle(Article $article): self
     {
-        if (!$this->articles->contains($article)) {
+        if ( ! $this->articles->contains($article)) {
             $this->articles[] = $article;
             $article->setAuthor($this);
         }
@@ -218,7 +218,7 @@ class User implements UserInterface, Serializable
 
     public function addComment(Comment $comment): self
     {
-        if (!$this->comments->contains($comment)) {
+        if ( ! $this->comments->contains($comment)) {
             $this->comments[] = $comment;
             $comment->setAuthor($this);
         }

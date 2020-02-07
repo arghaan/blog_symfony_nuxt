@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Article;
@@ -13,10 +15,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
+    private UserPasswordEncoderInterface $encoder;
 
 
     /**
@@ -39,7 +38,8 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
             $article = new Article();
             $article->setTitle("Article #$i");
-            $article->setText("<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae risus ut metus gravida congue in ac nisl. Praesent leo urna, venenatis sit amet tortor vitae, commodo tincidunt libero. Maecenas porta pharetra sem, vel dapibus odio eleifend non. Suspendisse lobortis ipsum at diam congue condimentum. Mauris aliquam, dolor in gravida sagittis, metus metus tincidunt nisi, a blandit nisl leo consequat purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam et nunc condimentum, consequat mauris ut, accumsan sem.</p>
+            $article->setText(
+                "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae risus ut metus gravida congue in ac nisl. Praesent leo urna, venenatis sit amet tortor vitae, commodo tincidunt libero. Maecenas porta pharetra sem, vel dapibus odio eleifend non. Suspendisse lobortis ipsum at diam congue condimentum. Mauris aliquam, dolor in gravida sagittis, metus metus tincidunt nisi, a blandit nisl leo consequat purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam et nunc condimentum, consequat mauris ut, accumsan sem.</p>
 <img src='https://hsto.org/webt/af/ns/d6/afnsd6pdnqhezs-ge1tjjl34xeo.jpeg' />
 <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
 <cut>
@@ -57,7 +57,8 @@ class AppFixtures extends Fixture
 <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
 <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
 <p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>
-<p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>");
+<p>Aliquam eu porta lacus. Sed condimentum congue orci eget consectetur. Curabitur convallis arcu porta volutpat venenatis. Vivamus lorem massa, blandit vehicula egestas id, tempor et nibh. Sed ut mattis velit. Pellentesque eget fermentum massa. Sed dictum tincidunt aliquam. Nullam porta risus ac leo fringilla vehicula. Aenean sed placerat arcu.</p>"
+            );
 
             $article->setAuthor($user);
 
@@ -70,7 +71,7 @@ class AppFixtures extends Fixture
             $manager->persist($category);
             $article->addCategory($category);
 
-            for ($i2= 0; $i2 < $i; $i2++) {
+            for ($i2 = 0; $i2 < $i; $i2++) {
                 $comment = new Comment();
                 $comment->setText("This is test comment #$i2");
                 $comment->setAuthor($user);

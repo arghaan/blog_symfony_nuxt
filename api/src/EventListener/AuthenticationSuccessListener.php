@@ -1,10 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 
 namespace App\EventListener;
-use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+
 use App\Entity\User;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 
 class AuthenticationSuccessListener
 {
@@ -13,7 +15,7 @@ class AuthenticationSuccessListener
         $data = $event->getData();
         $user = $event->getUser();
 
-        if (!$user instanceof User) {
+        if ( ! $user instanceof User) {
             return;
         }
 

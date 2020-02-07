@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 
@@ -19,7 +20,7 @@ class Tag
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid", unique=true)
      */
-    private $id;
+    private string $id;
 
     public function getId(): ?string
     {

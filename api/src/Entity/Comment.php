@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
@@ -20,29 +21,29 @@ class Comment
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid", unique=true)
      */
-    private $id;
+    private string $id;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $text;
+    private string $text;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $author;
+    private User $author;
 
     /**
      * @ManyToOne(targetEntity="Article", inversedBy="comments")
      * @JoinColumn(name="article_id", referencedColumnName="id")
      */
-    private $article;
+    private Article $article;
 
     /**
      * Comment constructor.
