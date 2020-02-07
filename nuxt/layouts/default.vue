@@ -1,18 +1,18 @@
 <template>
-  <v-app app>
-    <toolbar />
-    <v-content>
-      <v-container fluid>
-        <nuxt />
-      </v-container>
-    </v-content>
-    <v-footer app class="elevation-4 pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; Syrius Software Solutions</div>
-    </v-footer>
-  </v-app>
+    <v-app app>
+        <toolbar/>
+        <v-content>
+            <v-container fluid>
+                <nuxt/>
+            </v-container>
+        </v-content>
+        <v-footer app class="elevation-4 pa-3">
+            <v-spacer/>
+            <div>&copy; Syrius Software Solutions</div>
+        </v-footer>
+    </v-app>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 
 
 </style>

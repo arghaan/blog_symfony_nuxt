@@ -39,7 +39,7 @@
     import ArticleItem from "~/components/ArticleItem";
     import CategoryList from "~/components/CategoryList";
 
-    import articlesQuery from "../schemas/articles.graphql";
+    import articlesQuery from "~/schemes/articles.graphql";
 
     export default {
         // middleware: ['auth'],

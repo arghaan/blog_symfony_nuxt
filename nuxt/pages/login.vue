@@ -47,7 +47,7 @@
             email: '',
             emailRules: [
                 v => !!v || 'E-mail обязателен.',
-                // v => /.+@.+\..+/.test(v) || 'E-mail должен быть правильным.',
+                v => /.+@.+\..+/.test(v) || 'E-mail должен быть правильным.',
             ],
             password: '',
             lazy: true,
@@ -77,8 +77,7 @@
                     });
                     // this.$router.push('/admin/')
                 } catch (e) {
-                    console.log(e);
-                    // this.error = e.response.data.message
+                    this.error = e.response.data.message
                 }
             },
         }

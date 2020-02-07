@@ -10,20 +10,18 @@
                 class="py-0"
                 dense
                 nav
+                shaped
         >
             <v-list-item/>
             <v-list-item
                     :key="item.title"
                     :to="item.href"
-                    link
-                    nuxt
                     v-for="item in menu"
+                    exact
             >
-
                 <v-list-item-icon>
                     <v-icon class="icon">{{ item.icon }}</v-icon>
                 </v-list-item-icon>
-
                 <v-list-item-content>
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
@@ -37,7 +35,7 @@
         name: "NavDrawer",
         data: () => ({
             menu: [
-                {title: 'Dashboard', icon: 'mdi-view-dashboard', href: '/admin/'},
+                {title: 'Dashboard', icon: 'mdi-view-dashboard', href: '/admin'},
                 {title: 'Categories', icon: 'mdi-folder-multiple', href: '/admin/categories'},
                 {title: 'Articles', icon: 'mdi-file-multiple', href: '/admin/articles'},
                 {title: 'Comments', icon: 'mdi-comment-multiple', href: '/admin/comments'},

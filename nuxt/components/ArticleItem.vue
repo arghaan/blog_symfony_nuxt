@@ -25,7 +25,7 @@
                 >
                     <a
                         class="tags__link"
-                        :href="'#' + tag.node.id"
+                        :href="tag.node.id"
                     >
                         {{tag.node.id}}<span v-if="(index + 1) < item.node.tags.totalCount">, </span>
                     </a>
